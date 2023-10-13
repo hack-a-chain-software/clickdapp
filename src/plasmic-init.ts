@@ -1,6 +1,7 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 
 import { HelloWorld } from "./components/HelloWorld";
+import { GenericBOS } from "./components/GenericBOS";
 
 export const PLASMIC = initPlasmicLoader({
     projects: [
@@ -19,5 +20,29 @@ PLASMIC.registerComponent(HelloWorld, {
     props: {
         verbose: 'boolean',
         children: 'slot'
+    }
+});
+
+type Props = {
+    componentProps?: Record<string, unknown>;
+    src: string;
+    meta?: {
+      title: string;
+      description: string;
+    };
+  };
+
+PLASMIC.registerComponent(GenericBOS, {
+    name: 'GenericBOS',
+    props: {
+        src: 'string',
+        meta: {
+            type: 'object',
+            fields: {
+                title: 'string',
+                description: 'string',
+            }
+        },
+        componentProps: 'object',
     }
 });
