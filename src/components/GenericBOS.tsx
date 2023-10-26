@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
-
 import { VmComponent } from '@/components/vm/VmComponent';
-import { useCurrentComponentStore } from '@/stores/current-component';
 import { MetaTags } from './MetaTags';
 import styled from 'styled-components';
 
