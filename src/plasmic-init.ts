@@ -6,8 +6,8 @@ import { GenericBOS } from "./components/GenericBOS";
 export const PLASMIC = initPlasmicLoader({
     projects: [
         {
-            id: "panwJqaFrrhcK6STVUCQzQ",  // ID of a project you are using
-            token: "WotCe9kqE2LRc2gPRmbfuaIhTpbx94UXrHDqcHDWzm9EoXpiyOrj7FVA56Hl0G9Cb0C9IzAkF9tfE4AfAqnw"  // API token for that project
+            id: "cbDh2ZBZcVkRERbccjZSMe",  // ID of a project you are using
+            token: "lUGSpYD6QMS8IWXc7rax0O57VEYQtt8883wGwhUeu3bjRGOaY5OUkMx2s16DbuLVQalDSFeZD4jZ3TY4AzTw"  // API token for that project
         }
     ],
     // Fetches the latest revisions, whether or not they were unpublished!
