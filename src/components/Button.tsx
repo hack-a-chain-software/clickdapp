@@ -9,13 +9,13 @@ type Props = {
   };
 };
 
-export function Web3Connect(props: any) {  
+export function Button(props: any) {  
   return (
-    <div>
+    <>
       <VmComponent 
         src="1mateus.testnet/widget/web3connect"
         props={...props}
       />
-    </div>
+    </>
   );
 }

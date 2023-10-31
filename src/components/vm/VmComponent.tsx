@@ -1,6 +1,5 @@
 import { useBosLoaderStore } from '@/stores/bos-loader';
 import { useVmStore } from '@/stores/vm';
-
 import { Spinner } from '../lib/Spinner';
 
 type Props = {
