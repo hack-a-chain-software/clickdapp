@@ -15,7 +15,7 @@ export const getComponentNameAndImportMeta = (
   }
 ) => ({
   name: getPlasmicComponentName(componentName),
-  displayName: 'Connect ETH Wallet',
+  displayName: opts?.displayName ?? getDisplayComponentName(componentName),
   importPath: opts?.importPath ?? CHAKRA_UI_IMPORT_PATH,
   importName: componentName,
   ...(parentComponentName
