@@ -94,7 +94,7 @@ dependencies:
     version: 9.23.0
   hackachain-near-vm:
     specifier: github:hack-a-chain-software/VM
-    version: github.com/hack-a-chain-software/VM/b888f508951a2d0a48465682ffc79c7ac2e6500b(@babel/core@7.23.2)(@popperjs/core@2.11.8)(@types/react-dom@18.2.1)(@types/react@18.2.0)(near-api-js@2.1.3)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+    version: github.com/hack-a-chain-software/VM/db99138b44a0b8eb4a5ffe2a7632cd4bab717e90(@babel/core@7.23.2)(@popperjs/core@2.11.8)(@types/react-dom@18.2.1)(@types/react@18.2.0)(near-api-js@2.1.3)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
   near-api-js:
     specifier: 2.1.3
     version: 2.1.3
@@ -11568,9 +11568,9 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
 
-  github.com/hack-a-chain-software/VM/b888f508951a2d0a48465682ffc79c7ac2e6500b(@babel/core@7.23.2)(@popperjs/core@2.11.8)(@types/react-dom@18.2.1)(@types/react@18.2.0)(near-api-js@2.1.3)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
-    resolution: {tarball: https://codeload.github.com/hack-a-chain-software/VM/tar.gz/b888f508951a2d0a48465682ffc79c7ac2e6500b}
-    id: github.com/hack-a-chain-software/VM/b888f508951a2d0a48465682ffc79c7ac2e6500b
+  github.com/hack-a-chain-software/VM/db99138b44a0b8eb4a5ffe2a7632cd4bab717e90(@babel/core@7.23.2)(@popperjs/core@2.11.8)(@types/react-dom@18.2.1)(@types/react@18.2.0)(near-api-js@2.1.3)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
+    resolution: {tarball: https://codeload.github.com/hack-a-chain-software/VM/tar.gz/db99138b44a0b8eb4a5ffe2a7632cd4bab717e90}
+    id: github.com/hack-a-chain-software/VM/db99138b44a0b8eb4a5ffe2a7632cd4bab717e90
     name: hackachain-near-vm
     version: 2.5.2
     peerDependencies:
