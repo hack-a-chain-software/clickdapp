@@ -8,10 +8,10 @@ import { buttonMeta, borrowMeta } from "./utils/register";
 
 export const PLASMIC = initPlasmicLoader({
     projects: [
-        {
-            id: "nSYtb5p5gdwufJYxWt1kVu",
-            token: "VNdrdpGxwzeZ427KKjljE5a36NbUOIrqD7PuzePEzqV9GMhc7Hdm4GSRRr6J6HkhMi3zOtoOQ9X02cVVXQ"
-        }
+      {
+        id: "ndA9k37xVXXNcXXffChDY6",
+        token: "1k1xVXAdD1Lyh8fgBBL5Vspc5OxLAzg9zYJhjNONKHJQlZzvxD3i93OEWZqdbY9WZU0fSFR2LLTaDQgTBw"
+      }
     ],
     preview: true,
 })

@@ -25,6 +25,10 @@ export const getComponentNameAndImportMeta = (
 
 export const borrowMeta: any = {
   name: '[Liquity] Borrow',
+  input: {
+    type: 'slot',
+    allowedComponents: ['Button']
+  },
   props: {
     src: 'string',
     meta: {
