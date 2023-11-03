@@ -1,5 +1,9 @@
 @import 'bootstrap';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: 'Mona Sans';
   src: url('/fonts/Mona-Sans.woff2') format('woff2 supports variations'),

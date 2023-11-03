@@ -26,7 +26,15 @@ export const getComponentNameAndImportMeta = (
 export const borrowMeta: any = {
   name: '[Liquity] Borrow',
   props: {
-    //
+    src: 'string',
+    meta: {
+        type: 'object',
+        fields: {
+            title: 'string',
+            description: 'string',
+        }
+    },
+    componentProps: 'object'
   },
 };
 

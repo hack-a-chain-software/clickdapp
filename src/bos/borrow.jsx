@@ -1,6 +1,8 @@
 export const name = '0xgh.near/widget/liquityComponentBorrow'
 
 export const borrow = () => {
+  const { priceFeedAbi, troveManagerAbi, borrowerOperationAbi } = props;
+
   State.init({
     displayColl: "",
     displayBorrow: "",
@@ -90,18 +92,7 @@ export const borrow = () => {
 
   const troveManagerAddress = "0x0ECDF34731eE8Dd46caa99a1AAE173beD1B32c67";
 
-  const borrowerOperationAbi = fetch(
-    "https://api-sepolia.etherscan.io/api?module=contract&action=getabi&address=0xcb306e2509ca52872c2d04160F3c1fa7bc013064"
-  );
-
-  const troveManagerAbi = fetch(
-    "https://raw.githubusercontent.com/IDKNWHORU/liquity-sepolia/main/trove-manager-abi.json"
-  );
-
   const priceFeedAddress = "0x07dD4Ce17De84bA13Fc154A7FdB46fC362a41E2C";
-  const priceFeedAbi = fetch(
-    "https://raw.githubusercontent.com/IDKNWHORU/liquity-sepolia/main/price-feed-abi.json"
-  );
 
   const openTrove = () => {
     if (state.complete) {
@@ -109,7 +100,7 @@ export const borrow = () => {
     }
     const borrowerOperationContract = new ethers.Contract(
       borrowerOperationAddress,
-      borrowerOperationAbi.body.result,
+      borrowerOperationAbi,
       Ethers.provider().getSigner()
     );
 
@@ -164,13 +155,12 @@ export const borrow = () => {
         if (state.isOpenTrove === undefined) {
           const troveManagerContract = new ethers.Contract(
             troveManagerAddress,
-            troveManagerAbi.body,
+            troveManagerAbi,
             Ethers.provider().getSigner()
           );
 
           troveManagerContract.getTroveStatus(address).then((res) => {
             const isOpenTrove = ethers.utils.formatEther(res).includes("1");
-
             State.update({ isOpenTrove });
           });
         }
@@ -188,25 +178,30 @@ export const borrow = () => {
     if (state.price === 0) {
       const priceFeedContract = new ethers.Contract(
         priceFeedAddress,
-        priceFeedAbi.body,
+        priceFeedAbi,
         Ethers.provider().getSigner()
       );
       const troveManagerContract = new ethers.Contract(
         troveManagerAddress,
-        troveManagerAbi.body,
+        troveManagerAbi,
         Ethers.provider().getSigner()
       );
 
-      priceFeedContract.getPrice().then((priceRes) => {
-        const price = Number(ethers.utils.formatEther(priceRes));
+      priceFeedContract
+        .getPrice()
+        .then((priceRes) => {
+          const price = Number(ethers.utils.formatEther(priceRes));
 
-        State.update({ price });
-        troveManagerContract.getTCR(priceRes).then((tcrRes) => {
-          const tcr = Number(ethers.utils.formatEther(tcrRes)) * 100;
+          State.update({ price });
+          troveManagerContract.getTCR(priceRes).then((tcrRes) => {
+            const tcr = Number(ethers.utils.formatEther(tcrRes)) * 100;
 
-          State.update({ tcr });
+            State.update({ tcr });
+          });
+        })
+        .catch((err) => {
+          console.log("err", err);
         });
-      });
     }
   }
 
@@ -227,172 +222,101 @@ export const borrow = () => {
         State.update({ loading: false });
       });
 
-  const BorrowWrapper = styled.div`
-    width: 100%;
-    .input-section{
-      width: 100%;
-      color: #8e9aaf;
-      &.deposit{
-          margin-bottom: 1rem;
-      }
-    }
-    .input-label{
-      color: black;
-      margin-bottom: 0.5rem;
-    }
-    .input-wrapper{
-      display: flex;
-      width: 100%;
-      border: rgb(220, 220, 220) 1px solid;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .info-wrapper{
-      display: flex;
-      flex-direction: column;
-      margin: 0 0 2rem 0;
-      div {
-        height: 1.75rem;
-        display: flex;
-        align-items: center;
-      }
-    }
-    .detail-info-wrapper{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #8e9aaf;
-    }
-      .error-message{
-          height: 2rem;
-          width: 100%;
-          color: #3a0ca3;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-      }
-
-      .info-unit{
-          margin-left: 0.5rem;
-      }
-
-      .confirm-wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-    .confirm {
-      border: none;
-      border-radius: 1000px;
-      width: 75%;
-      height: 2rem;
-      transition: 0.5s all;
-      font-size: 1.1rem;
-
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      &.ok {
-        background-color: #3a0ca3;
-        color: white;
-        font-size: 1.1rem;
-      }
-      &.not-ok {
-        background-color: #8e9aaf;
-        color: white;
-        font-size: 0.9rem;
-      }
-    }
-
-    input {
-      border: none;
-      background-color: transparent;
-    }
-    input:focus {
-      outline: none;
-    }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  `;
-
   return (
-    <BorrowWrapper>
-      <div className="input-section deposit">
-        <div className="input-label">Deposit (ETH)</div>
+    <div className="w-full h-full flex flex-col items-center justify-center">
+      <div className="flex flex-col">
+        <span className="">Deposit (ETH)</span>
 
-        <div className="input-wrapper">
-          <input
-            type="text"
-            placeholder="0.0000 ETH"
-            disabled={
-              !state.address || state.isOpenTrove || state.chainId !== 11155111
-            }
-            onChange={setcoll}
-            value={state.displayColl}
-          ></input>
-        </div>
+        <input
+          type="text"
+          placeholder="0.0000 ETH"
+          disabled={
+            !state.address || state.isOpenTrove || state.chainId !== 11155111
+          }
+          onChange={setcoll}
+          value={state.displayColl}
+        />
       </div>
 
-      <div className="input-section">
-        <div className="input-label">Borrow (LUSD)</div>
-        <div className="input-wrapper">
-          <input
-            type="text"
-            placeholder="0.0000 LUSD"
-            disabled={
-              !state.address || state.isOpenTrove || state.chainId !== 11155111
-            }
-            onChange={setBorrow}
-            value={state.displayBorrow}
-          />
-        </div>
+      <div className="flex flex-col">
+        <span className="">Borrow (LUSD)</span>
+
+        <input
+          type="text"
+          placeholder="0.0000 LUSD"
+          disabled={
+            !state.address || state.isOpenTrove || state.chainId !== 11155111
+          }
+          onChange={setBorrow}
+          value={state.displayBorrow}
+        />
       </div>
-      <div className="error-message">{state.msg}</div>
-      <div className="info-wrapper">
-        <div className="detail-info-wrapper">
-          <div className="detail-info-label">Liquidation Reserve</div>
-          <div className="detail-info-value">
+
+      <div>
+        <span className="error-message">{state.msg}</span>
+      </div>
+
+      <div className="flex flex-col">
+        <div className="flex justify-between items-center">
+          <div className="">
+            <span className="">Liquidation Reserve</span>
+          </div>
+
+          <div className="flex items-center justify-center">
             <span className="">{state.liquidationReserve}</span>
+
             <span className="info-unit">LUSD</span>
           </div>
         </div>
-        <div className="detail-info-wrapper">
-          <div className="detail-info-label">Borrowing Fee</div>
-          <div className="detail-info-value">
+
+        <div className="flex justify-between items-center">
+          <div className="">
+            <span className="">Borrowing Fee</span>
+          </div>
+
+          <div className="flex items-center justify-center">
             <span className="">{state.borrowingFee.toFixed(2)}</span>{" "}
-            <span className="info-unit">LUSD (0.50%)</span>
+            <span className="">LUSD (0.50%)</span>
           </div>
         </div>
 
-        <div className="detail-info-wrapper">
-          <div className="detail-info-label">Recieve</div>
-          <div className="detail-info-value">
+        <div className="flex justify-between items-center">
+          <div className="">
+            <span>Recieve</span>
+          </div>
+
+          <div className="flex items-center justify-center">
             <span className="">{state.borrow.toFixed(2)}</span>
+
             <span className="info-unit">LUSD</span>
           </div>
         </div>
 
-        <div className="detail-info-wrapper">
-          <div className="detail-info-label">Total debt</div>
-          <div className="detail-info-value">
+        <div className="flex justify-between items-center">
+          <div className="">
+            <span>Total debt</span>
+          </div>
+
+          <div className="flex justify-center items-center">
             <span className="">{state.totalcoll.toFixed(2)}</span>
+
             <span className="info-unit">LUSD</span>
           </div>
         </div>
-        <div className="detail-info-wrapper">
-          <div className="detail-info-label">Collateral ratio</div>
-          <div className="detail-info-value">
+
+        <div className="flex justify-between items-center">
+          <div className="">Collateral ratio</div>
+
+          <div className="flex justify-center items-center">
             <span>{state.collateralRatio.toFixed(1)}</span>
+
             <span className="info-unit">%</span>
           </div>
         </div>
       </div>
+
       <div className="confirm-wrapper">
-        {state.address ? (
+        {state.address && (
           <button
             className={`confirm ${state.isBlocked ? "not-ok" : "ok"}`}
             disabled={state.isBlocked}
@@ -412,10 +336,8 @@ export const borrow = () => {
               ? "Check stats"
               : "Open Trove"}
           </button>
-        ) : (
-          <Web3Connect className="connect-wallet" />
         )}
       </div>
-    </BorrowWrapper>
+    </div>
   );
 }

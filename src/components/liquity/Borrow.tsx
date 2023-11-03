@@ -1,5 +1,6 @@
 import { VmComponent } from '@/components/vm/VmComponent';
 import { Box, Button, Text } from "@chakra-ui/react";
+import { troveManagerAbi, borrowerOperationAbi, priceFeedAbi } from '@/utils/liquity';
 
 const chakraUIComponents: any = {
   Box,
@@ -10,17 +11,19 @@ const chakraUIComponents: any = {
 
 
 export function Borrow(props: any) {
-  const tag = props.component || 'Button'
+  console.log('props', props)
 
-  const component = {
-    [tag]: chakraUIComponents[tag] as any
-  };
+  // const tag = props.component || 'Button'
+
+  // const component = {
+  //   [tag]: chakraUIComponents[tag] as any
+  // };
 
   return (
     <div>
       <VmComponent
-        src="1mateus.testnet/widget/web3connect"
-        props={{...props, ...component}}
+        src="1mateus.testnet/widget/liquity-borrow"
+        props={{ troveManagerAbi, borrowerOperationAbi, priceFeedAbi }}
       />
     </div>
   );

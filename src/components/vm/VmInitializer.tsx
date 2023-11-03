@@ -13,7 +13,7 @@ import {
   useNear,
   utils,
   Widget,
-} from 'hackachain-near-vm';
+} from 'near-social-vm';
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
 

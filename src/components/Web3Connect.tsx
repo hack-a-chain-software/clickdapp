@@ -8,6 +8,7 @@ const chakraUIComponents: any = {
   // Adicione outros componentes do Chakra UI aqui
 };
 
+
 export function Web3Connect(props: any) {
   const tag = props.component || 'Button'
 
