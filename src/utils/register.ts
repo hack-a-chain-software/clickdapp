@@ -23,6 +23,13 @@ export const getComponentNameAndImportMeta = (
     : {}),
 });
 
+export const borrowMeta: any = {
+  name: '[Liquity] Borrow',
+  props: {
+    //
+  },
+};
+
 export const buttonMeta: any = {
   ...getComponentNameAndImportMeta("Button"),
   props: {

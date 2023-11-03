@@ -3,7 +3,8 @@ import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 import { HelloWorld } from "./components/HelloWorld";
 import { GenericBOS } from "./components/GenericBOS";
 import { Web3Connect } from './components/Web3Connect';
-import { buttonMeta } from "./utils/register";
+import { Borrow } from './components/liquity/Borrow';
+import { buttonMeta, borrowMeta } from "./utils/register";
 
 export const PLASMIC = initPlasmicLoader({
     projects: [
@@ -47,11 +48,6 @@ PLASMIC.registerComponent(GenericBOS, {
     }
 });
 
-// PLASMIC.registerComponent(Web3Connect, {
-//     name: 'Web3Connect',
-//     props: {
-//         className: 'object',
-//     }
-// });
+PLASMIC.registerComponent(Borrow, borrowMeta);
 
 PLASMIC.registerComponent(Web3Connect, buttonMeta)
