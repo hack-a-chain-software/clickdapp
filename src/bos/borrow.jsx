@@ -1,7 +1,14 @@
 export const name = '0xgh.near/widget/liquityComponentBorrow'
 
 export const borrow = () => {
-  const { inputClass, cardClass, inputWrapperClass, inputLabelClass } = props;
+  const {
+    getText,
+    getInput,
+    className,
+    getTextInfo,
+    getTextInput,
+    inputWrapperClass,
+  } = props;
 
   const priceFeedAbi = [
     {
@@ -2101,64 +2108,68 @@ export const borrow = () => {
         State.update({ loading: false });
       });
 
-  return (
-    <div
-      className={cardClass}
-    >
-      <div
-        className={inputWrapperClass}
-      >
-        <span
-          className={inputLabelClass}
-        >
-          Deposit (ETH)
-        </span>
+  const inputColl = getInput({
+    type: "text",
+    onChange: setcoll,
+    value: state.displayColl,
+    placeholder: "0.0000 ETH",
+    disabled: !state.address || state.isOpenTrove || state.chainId !== 11155111,
+  })
 
-        <input
-          type="text"
-          placeholder="0.0000 ETH"
-          disabled={
-            !state.address || state.isOpenTrove || state.chainId !== 11155111
-          }
-          className={inputClass}
-          onChange={setcoll}
-          value={state.displayColl}
-        />
+  const inputBorrow = getInput({
+    type: "text",
+    onChange: setBorrow,
+    value: state.displayBorrow,
+    placeholder: "0.0000 LUSD",
+    disabled: !state.address || state.isOpenTrove || state.chainId !== 11155111,
+  })
+
+  return (
+    <div className={className}>
+      <div className={inputWrapperClass}>
+        {getText({ children: "Deposit (ETH)" })}
+
+        {inputColl}
       </div>
 
-      <div
-        className={inputWrapperClass}
-      >
-        <span
-          className={inputLabelClass}
-        >
-          Borrow (LUSD)
-        </span>
+      <div className={inputWrapperClass}>
+        {getText({ children: "Borrow (LUSD)" })}
 
-        <input
-          type="text"
-          className={inputClass}
-          placeholder="0.0000 LUSD"
-          disabled={
-            !state.address || state.isOpenTrove || state.chainId !== 11155111
-          }
-          onChange={setBorrow}
-          value={state.displayBorrow}
-        />
+        {inputBorrow}
       </div>
 
       <div>
-        <span className="error-message">{state.msg}</span>
+        {getText({ children: state.msg })}
       </div>
 
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
           <div className="">
-            <span className="">Liquidation Reserve</span>
+            {getText({ children: "Liquidation Reserve" })}
           </div>
 
           <div className="flex items-center justify-center">
-            <span className="">{state.liquidationReserve}</span>
+            {getText({ children: state.liquidationReserve + "LUSD" })}
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center">
+          <div className="">
+            {getText({ children: "Borrowing Fee" })}
+          </div>
+
+          <div className="flex items-center justify-center">
+            {getText({ children: `${state.borrowingFee.toFixed(2)} LUSD (0.50%)` })}
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center">
+          <div className="">
+            {getText({ children: "Recieve" })}
+          </div>
+
+          <div className="flex items-center justify-center">
+            {getText({ children: state.borrow.toFixed(2) })}
 
             <span className="info-unit">LUSD</span>
           </div>
@@ -2166,34 +2177,11 @@ export const borrow = () => {
 
         <div className="flex justify-between items-center">
           <div className="">
-            <span className="">Borrowing Fee</span>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <span className="">{state.borrowingFee.toFixed(2)}</span>{" "}
-            <span className="">LUSD (0.50%)</span>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div className="">
-            <span>Recieve</span>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <span className="">{state.borrow.toFixed(2)}</span>
-
-            <span className="info-unit">LUSD</span>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div className="">
-            <span>Total debt</span>
+            {getText({ children: 'Total debt' })}
           </div>
 
           <div className="flex justify-center items-center">
-            <span className="">{state.totalcoll.toFixed(2)}</span>
+            {getText({ children: state.totalcoll.toFixed(2) })}
 
             <span className="info-unit">LUSD</span>
           </div>

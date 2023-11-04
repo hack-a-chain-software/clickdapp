@@ -24,26 +24,85 @@ export const getComponentNameAndImportMeta = (
 });
 
 export const borrowMeta: any = {
-  name: '[Liquity] Borrow',
-  input: {
-    type: 'slot',
-    allowedComponents: ['Button']
-  },
+  name: 'liquityborrow',
+  displayName: '[Liquity] Borrow',
+  importPath: '@/components/liquity/Borrow',
+  importName: 'Borrow',
   props: {
-    src: 'string',
-    meta: {
-        type: 'object',
-        fields: {
-            title: 'string',
-            description: 'string',
+    input: {
+      type: "slot",
+      defaultValue: [
+        {
+          name: 'chakra-ui-Input',
+          type: "component",
         }
+      ]
     },
-    componentProps: 'object'
+    text: {
+      type: "slot",
+      defaultValue: [
+        {
+          name: 'chakra-ui-Text',
+          type: "component",
+        }
+      ]
+    },
+  },
+};
+
+export const textMeta: any = {
+  ...getComponentNameAndImportMeta("Text"),
+  props: {
+    children: {
+      type: "slot",
+      defaultValue: [
+        {
+          type: "text",
+          value: "Some Text",
+        },
+      ],
+    },
+  },
+};
+
+export const inputMeta: any = {
+  ...getComponentNameAndImportMeta("Input"),
+  props: {
+    size: {
+      type: "choice",
+      options: ["xl", "sm", "md", "lg"],
+    },
+    variant: {
+      type: "choice",
+      options: ["outline", "filled", "flushed", "unstyled"],
+    },
+    isDisabled: {
+      type: "boolean",
+    },
+    isInvalid: {
+      type: "boolean",
+    },
+    isReadOnly: {
+      type: "boolean",
+    },
+    isRequired: {
+      type: "boolean",
+    },
+    errorBorderColor: {
+      type: "string",
+      defaultValue: "red.500",
+    },
+    focusBorderColor: {
+      type: "string",
+      defaultValue: "blue.500",
+    },
   },
 };
 
 export const buttonMeta: any = {
   ...getComponentNameAndImportMeta("Button"),
+  name: 'web3connect',
+  displayName: 'Web3Connect',
   props: {
     size: {
       type: "choice",

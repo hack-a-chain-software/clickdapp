@@ -1,10 +1,10 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 
-import { HelloWorld } from "./components/HelloWorld";
 import { GenericBOS } from "./components/GenericBOS";
 import { Web3Connect } from './components/Web3Connect';
 import { Borrow } from './components/liquity/Borrow';
-import { buttonMeta, borrowMeta } from "./utils/register";
+import { Input, Text } from "@chakra-ui/react";
+import { buttonMeta, borrowMeta, inputMeta, textMeta } from "./utils/register";
 
 export const PLASMIC = initPlasmicLoader({
     projects: [
@@ -15,23 +15,6 @@ export const PLASMIC = initPlasmicLoader({
     ],
     preview: true,
 })
-
-PLASMIC.registerComponent(HelloWorld, {
-    name: 'HelloWorld',
-    props: {
-        verbose: 'boolean',
-        children: 'slot'
-    }
-});
-
-type Props = {
-    componentProps?: Record<string, unknown>;
-    src: string;
-    meta?: {
-      title: string;
-      description: string;
-    };
-  };
 
 PLASMIC.registerComponent(GenericBOS, {
     name: 'GenericBOS',
@@ -48,6 +31,8 @@ PLASMIC.registerComponent(GenericBOS, {
     }
 });
 
+PLASMIC.registerComponent(Text, textMeta)
+PLASMIC.registerComponent(Input, inputMeta)
 PLASMIC.registerComponent(Borrow, borrowMeta);
 
 PLASMIC.registerComponent(Web3Connect, buttonMeta)
