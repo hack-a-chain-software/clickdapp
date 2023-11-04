@@ -5,6 +5,7 @@ export const borrow = () => {
     getText,
     getInput,
     className,
+    getButton,
     getTextInfo,
     getTextInput,
     inputWrapperClass,
@@ -2108,119 +2109,100 @@ export const borrow = () => {
         State.update({ loading: false });
       });
 
-  const inputColl = getInput({
-    type: "text",
-    onChange: setcoll,
-    value: state.displayColl,
-    placeholder: "0.0000 ETH",
-    disabled: !state.address || state.isOpenTrove || state.chainId !== 11155111,
-  })
-
-  const inputBorrow = getInput({
-    type: "text",
-    onChange: setBorrow,
-    value: state.displayBorrow,
-    placeholder: "0.0000 LUSD",
-    disabled: !state.address || state.isOpenTrove || state.chainId !== 11155111,
-  })
-
   return (
     <div className={className}>
       <div className={inputWrapperClass}>
-        {getText({ children: "Deposit (ETH)" })}
+        {getTextInput({ children: "Deposit (ETH)" })}
 
-        {inputColl}
+        {getInput({
+          type: "text",
+          onChange: setcoll,
+          value: state.displayColl,
+          placeholder: "0.0000 ETH",
+          disabled:
+            !state.address || state.isOpenTrove || state.chainId !== 11155111,
+        })}
       </div>
 
       <div className={inputWrapperClass}>
-        {getText({ children: "Borrow (LUSD)" })}
+        {getTextInput({ children: "Borrow (LUSD)" })}
 
-        {inputBorrow}
+        {getInput({
+          type: "text",
+          onChange: setBorrow,
+          value: state.displayBorrow,
+          placeholder: "0.0000 LUSD",
+          disabled:
+            !state.address || state.isOpenTrove || state.chainId !== 11155111,
+        })}
       </div>
 
-      <div>
-        {getText({ children: state.msg })}
-      </div>
+      <div>{getText({ children: state.msg })}</div>
 
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
-          <div className="">
-            {getText({ children: "Liquidation Reserve" })}
-          </div>
+          {getTextInfo({ children: "Liquidation Reserve" })}
+
+          {getTextInfo({ children: state.liquidationReserve + "LUSD" })}
+        </div>
+
+        <div className="flex justify-between items-center">
+          {getTextInfo({ children: "Borrowing Fee" })}
+
+          {getTextInfo({
+            children: `${state.borrowingFee.toFixed(2)} LUSD (0.50%)`,
+          })}
+        </div>
+
+        <div className="flex justify-between items-center">
+          {getTextInfo({ children: "Recieve" })}
 
           <div className="flex items-center justify-center">
-            {getText({ children: state.liquidationReserve + "LUSD" })}
+            {getTextInfo({ children: state.borrow.toFixed(2) })}
+
+            {getTextInfo({ children: "LUSD" })}
           </div>
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="">
-            {getText({ children: "Borrowing Fee" })}
-          </div>
-
-          <div className="flex items-center justify-center">
-            {getText({ children: `${state.borrowingFee.toFixed(2)} LUSD (0.50%)` })}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div className="">
-            {getText({ children: "Recieve" })}
-          </div>
-
-          <div className="flex items-center justify-center">
-            {getText({ children: state.borrow.toFixed(2) })}
-
-            <span className="info-unit">LUSD</span>
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div className="">
-            {getText({ children: 'Total debt' })}
-          </div>
+          {getTextInfo({ children: "Total debt" })}
 
           <div className="flex justify-center items-center">
-            {getText({ children: state.totalcoll.toFixed(2) })}
+            {getTextInfo({ children: state.totalcoll.toFixed(2) })}
 
-            <span className="info-unit">LUSD</span>
+            {getTextInfo({ children: "LUSD" })}
           </div>
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="">Collateral ratio</div>
+          {getTextInfo({ children: "Collateral" })}
 
           <div className="flex justify-center items-center">
-            <span>{state.collateralRatio.toFixed(1)}</span>
+            {getTextInfo({ children: state.collateralRatio.toFixed(1) })}
 
-            <span className="info-unit">%</span>
+            {getTextInfo({ children: "%" })}
           </div>
         </div>
       </div>
 
-      <div className="confirm-wrapper">
-        {state.address && (
-          <button
-            className={`confirm ${state.isBlocked ? "not-ok" : "ok"}`}
-            disabled={state.isBlocked}
-            onClick={openTrove}
-          >
-            {Ethers.provider() && state.chainId !== 11155111
-              ? "Change network to Sepolia"
-              : state.isOpenTrove === true
-                ? "You already have active Trove"
-                : state.loading
-                  ? "Loading..."
-                  : state.complete
-                    ? "Done ✅"
-                    : state.coll === 0 || state.borrow === 0
-                      ? "Enter input value"
-                      : state.isBlocked
-                        ? "Check stats"
-                        : "Open Trove"}
-          </button>
-        )}
-      </div>
+      {getButton({
+        onClick: openTrove,
+        disabled: state.isBlocked || state.isOpenTrove === true || state.coll === 0 || state.borrow === 0,
+        children:
+          Ethers.provider() && state.chainId !== 11155111
+            ? "Change network to Sepolia"
+            : state?.isOpenTrove === true
+              ? "You already have active Trove"
+              : state?.loading
+                ? "Loading..."
+                : state?.complete
+                  ? "Done ✅"
+                  : state?.coll === 0 || state?.borrow === 0
+                    ? "Enter input value"
+                    : state.isBlocked
+                      ? "Check stats"
+                      : "Open Trove",
+      })}
     </div>
   );
 }

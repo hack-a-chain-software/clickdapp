@@ -11,18 +11,12 @@ type Props = {
   };
 };
 
-const Wrapper = styled.div`
-  padding: 1rem;
-`;
-
-export function GenericBOS(props: Props) {
+export function GenericBOS(props: any) {
   return (
-    <>
-      {props.meta && <MetaTags {...props.meta} />}
-
-      <Wrapper>
-        <VmComponent src={props.src} props={props.componentProps} />
-      </Wrapper>
-    </>
+    <div
+      className={props.className}
+    >
+      <VmComponent src={props.src} props={props.componentProps} />
+    </div>
   );
 }

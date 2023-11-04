@@ -25,7 +25,10 @@ export function Borrow(props: any) {
       src="1mateus.testnet/widget/liquity-borrow"
       props={{
         className: props.className,
+        getButton: (values: any) => React.cloneElement(props.button, values),
         getText: (values: any) => React.cloneElement(props.text, values),
+        getTextInfo: (values: any) => React.cloneElement(props.textInput, values),
+        getTextInput: (values: any) => React.cloneElement(props.textInfo, values),
         getInput: (values: any) => React.cloneElement(props.input, values),
         inputLabelClass: '',
         inputWrapperClass: 'flex flex-col space-y-2',
