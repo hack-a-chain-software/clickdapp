@@ -128,8 +128,8 @@ export const inputMeta: any = {
 
 export const web3meta: any = {
   ...getComponentNameAndImportMeta("Button"),
-  name: 'web3connect',
-  displayName: 'Web3Connect',
+  name: 'bos-web3connect',
+  displayName: '[BOS] Web3Connect',
   props: {
     size: {
       type: "choice",

@@ -4,6 +4,7 @@ export function GenericBOS(props: any) {
   return (
     <div
       className={props.className + ' relative w-max h-max bos'}
+      style={{ overflow: 'hidden' }}
     >
       <VmComponent src={props.src} props={props.componentProps} />
     </div>

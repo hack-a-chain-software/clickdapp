@@ -22,26 +22,28 @@ export const PLASMIC = initPlasmicLoader({
     preview: true,
 })
 
-PLASMIC.registerComponent(GenericBOS, {
-    name: 'GenericBOS',
-    props: {
-        src: 'string',
-        meta: {
-            type: 'object',
-            fields: {
-                title: 'string',
-                description: 'string',
-            }
-        },
-        componentProps: 'object',
-    }
-});
-
 PLASMIC.registerComponent(Text, textMeta)
 PLASMIC.registerComponent(Input, inputMeta)
 PLASMIC.registerComponent(Button, buttonMeta)
 PLASMIC.registerComponent(Borrow, borrowMeta);
 PLASMIC.registerComponent(Web3Connect, web3meta)
+
+
+PLASMIC.registerComponent(GenericBOS, {
+  name: 'bos-generic',
+  displayName: '[BOS] Generic',
+  props: {
+      src: 'string',
+      meta: {
+          type: 'object',
+          fields: {
+              title: 'string',
+              description: 'string',
+          }
+      },
+      componentProps: 'object',
+  }
+});
 
 PLASMIC.registerComponent(Gmx, {
   props: {},
