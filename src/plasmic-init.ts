@@ -1,16 +1,22 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 
-import { GenericBOS } from "./components/GenericBOS";
-import { Web3Connect } from './components/Web3Connect';
 import { Borrow } from './components/liquity/Borrow';
 import { Button, Input, Text } from "@chakra-ui/react";
+import {
+  Lido,
+  ZKEVM,
+  Gmx,
+  GenericBOS,
+  Web3Connect,
+} from '@/components/bos'
+
 import { buttonMeta, borrowMeta, inputMeta, textMeta, web3meta } from "./utils/register";
 
 export const PLASMIC = initPlasmicLoader({
     projects: [
       {
-        id: "nSYtb5p5gdwufJYxWt1kVu",
-        token: "VNdrdpGxwzeZ427KKjljE5a36NbUOIrqD7PuzePEzqV9GMhc7Hdm4GSRRr6J6HkhMi3zOtoOQ9X02cVVXQ"
+        id: process.env.PLASMIC_ID as string,
+        token: process.env.PLASMIC_TOKEN as string
       }
     ],
     preview: true,
@@ -36,3 +42,21 @@ PLASMIC.registerComponent(Input, inputMeta)
 PLASMIC.registerComponent(Button, buttonMeta)
 PLASMIC.registerComponent(Borrow, borrowMeta);
 PLASMIC.registerComponent(Web3Connect, web3meta)
+
+PLASMIC.registerComponent(Gmx, {
+  props: {},
+  name: 'bos-gmx',
+  displayName: '[BOS] Gmx',
+})
+
+PLASMIC.registerComponent(Lido, {
+  props: {},
+  name: 'bos-lido',
+  displayName: '[BOS] Lido',
+})
+
+PLASMIC.registerComponent(ZKEVM, {
+  props: {},
+  name: 'bos-zk-evm',
+  displayName: '[BOS] ZK-EVM',
+})
