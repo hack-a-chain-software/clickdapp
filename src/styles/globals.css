@@ -67,6 +67,7 @@ a:hover {
 }
 
 .bos :first-child {
+  min-height: unset !important;
   white-space: normal !important;
 }
 
