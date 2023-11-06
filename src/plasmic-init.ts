@@ -9,6 +9,8 @@ import {
   Borrow,
   GenericBOS,
   Web3Connect,
+  CodeComponent,
+  CustomProp,
 } from '@/components/code'
 
 import { buttonMeta, borrowMeta, inputMeta, textMeta, web3meta } from "./utils/register";
@@ -20,7 +22,7 @@ export const PLASMIC = initPlasmicLoader({
         token: process.env.PLASMIC_TOKEN as string
       }
     ],
-    preview: true,
+    preview: process.env.NODE_ENV === 'development',
 })
 
 PLASMIC.registerComponent(Text, textMeta)
@@ -38,8 +40,8 @@ PLASMIC.registerComponent(GenericBOS, {
       meta: {
           type: 'object',
           fields: {
-              title: 'string',
-              description: 'string',
+            title: 'string',
+            description: 'string',
           }
       },
       componentProps: 'object',
@@ -63,3 +65,36 @@ PLASMIC.registerComponent(ZKEVM, {
   name: 'bos-zk-evm',
   displayName: '[BOS] ZK-EVM',
 })
+
+// Registration
+PLASMIC.registerComponent(CodeComponent, {
+  name: 'CodeComponent',
+  props: {
+    //
+    value: {
+      type: "slot",
+      defaultValue: [
+        //
+      ]
+    }
+  },
+  actions: [
+    {
+      type: 'button-action',
+      label: 'Append new element',
+      onClick: ({ studioOps }) => {
+        console.log('studioops', studioOps)
+        studioOps.appendToSlot(
+          {
+            type: 'img',
+            src: '',
+            styles: {
+              maxWidth: '100%'
+            }
+          },
+          'value'
+        );
+      }
+    }
+  ]
+});

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .bos :first-child {
   min-height: unset !important;
   white-space: normal !important;

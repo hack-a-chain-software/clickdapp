@@ -65,6 +65,15 @@ export const borrowMeta: any = {
         }
       ]
     },
+    defbutton: {
+      type: "slot",
+      defaultValue: [
+        {
+          type: "default-component",
+          kind: "button",
+        }
+      ]
+    },
     button: {
       type: "slot",
       defaultValue: [
