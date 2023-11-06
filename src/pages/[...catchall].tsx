@@ -30,9 +30,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { catchall } = context.params ?? {};
 
   // Convert the catchall param into a path string
-  const plasmicPath =
-    typeof catchall === 'string' ? catchall : Array.isArray(catchall) ? `/${catchall.join('/')}` : '/';
+  const plasmicPath = typeof catchall === 'string' ? catchall : Array.isArray(catchall) ? `/${catchall.join('/')}` : '/';
+
   const plasmicData = await PLASMIC.maybeFetchComponentData(plasmicPath);
+
   if (!plasmicData) {
     // This is some non-Plasmic catch-all page
     return {

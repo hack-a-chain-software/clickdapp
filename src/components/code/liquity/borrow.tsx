@@ -7,18 +7,10 @@ const chakraUIComponents: any = {
   Box,
   Text,
   Button,
-  // Adicione outros componentes do Chakra UI aqui
 };
 
-//clickdapp-poc-1mateus.vercel.app/plasmic-host
-
 export function Borrow(props: any) {
-  console.log(props)
-  // const tag = props.component || 'Button'
-
-  // const component = {
-  //   [tag]: chakraUIComponents[tag] as any
-  // };
+  console.log('props', props)
 
   return (
     <VmComponent

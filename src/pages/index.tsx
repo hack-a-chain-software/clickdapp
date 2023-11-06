@@ -1,13 +1,8 @@
-import { useBosComponents } from '@/hooks/useBosComponents';
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import { ComponentWrapperPage } from '@/components/ComponentWrapperPage';
 
-const HomePage: NextPageWithLayout = () => {
-  const components = useBosComponents();
-  return <ComponentWrapperPage src={components.home} />;
-};
+const HomePage: NextPageWithLayout = () => <>Clickdapp poc</>
 
-HomePage.getLayout = useDefaultLayout;
+HomePage.getLayout = useDefaultLayout
 
-export default HomePage;
+export default HomePage

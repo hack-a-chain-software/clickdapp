@@ -1,14 +1,15 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 
-import { Borrow } from './components/liquity/Borrow';
 import { Button, Input, Text } from "@chakra-ui/react";
+
 import {
   Lido,
   ZKEVM,
   Gmx,
+  Borrow,
   GenericBOS,
   Web3Connect,
-} from '@/components/bos'
+} from '@/components/code'
 
 import { buttonMeta, borrowMeta, inputMeta, textMeta, web3meta } from "./utils/register";
 

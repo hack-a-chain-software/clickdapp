@@ -1,6 +1,6 @@
 {
-  "name": "near-gateway",
-  "version": "1.0.0",
+  "name": "clickdapp",
+  "version": "0.0.1",
   "private": true,
   "engines": {
     "node": ">=18.0.0",

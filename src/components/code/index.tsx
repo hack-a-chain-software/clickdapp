@@ -1,5 +1,6 @@
 export * from './gmx'
 export * from './lido'
+export * from './liquity'
 export * from './zk-evm'
 export * from './generic'
 export * from './web3connect'
