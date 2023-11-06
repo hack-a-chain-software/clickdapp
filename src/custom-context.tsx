@@ -1,11 +1,18 @@
 import React, { createContext, useReducer, useContext, useState } from 'react';
 
+export type StateType = Record<string, any>
+
+export interface EventInterface {
+  name: string
+  handler: () => void
+}
+
 interface VMContextValue {
   state: any;
   events: any[];
   dispatchState: (value: any) => void;
-  registerEvent: (callback: any, state: any) => void;
-  dispatchEvent: (callback: any, state: any) => void | undefined;
+  registerEvent: (event: any) => void;
+  dispatchEvent: (event: any) => void | undefined;
 }
 
 const initialState = {};
@@ -18,31 +25,31 @@ const VMContext = createContext<VMContextValue>({
   registerEvent: () => {},
 });
 
-const reducer = (state: any, action: any) => {
+const reducer = (state: StateType, updated: StateType ) => {
   return {
     ...state,
-    ...action,
+    ...updated,
   };
 }
 
 const VMContextProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [events, setEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<EventInterface[]>([]);
 
-  const registerEvent = (event: any) => {
+  const registerEvent = (event: EventInterface) => {
     setEvents([...events, event]);
   }
 
-  const dispatchEvent = (event: any) => {
-    const eventIndex = events.findIndex((e) => e.name === event.name);
+  const dispatchEvent = (name: string) => {
+    const eventIndex = events.findIndex((e) => e.name === name);
 
     if (eventIndex !== -1) {
       events[eventIndex].handler();
     }
   }
 
-  const dispatchState = (value: any) => dispatch(value)
+  const dispatchState = (value: StateType) => dispatch(value)
 
   return (
     <VMContext.Provider value={{ state, events, dispatchEvent, registerEvent, dispatchState }}>
