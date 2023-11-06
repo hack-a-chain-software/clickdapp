@@ -26,7 +26,7 @@ export const getComponentNameAndImportMeta = (
 export const borrowMeta: any = {
   name: 'liquityborrow',
   displayName: '[Liquity] Borrow',
-  importPath: '@/components/liquity/Borrow',
+  importPath: '@/components/code',
   importName: 'Borrow',
   props: {
     input: {

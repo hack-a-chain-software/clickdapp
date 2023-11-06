@@ -9,8 +9,9 @@ import {
   Borrow,
   GenericBOS,
   Web3Connect,
-  CodeComponent,
-  CustomProp,
+  Tester,
+  // CodeComponent,
+  // CustomProp,
 } from '@/components/code'
 
 import { buttonMeta, borrowMeta, inputMeta, textMeta, web3meta } from "./utils/register";
@@ -31,6 +32,14 @@ PLASMIC.registerComponent(Button, buttonMeta)
 PLASMIC.registerComponent(Borrow, borrowMeta);
 PLASMIC.registerComponent(Web3Connect, web3meta)
 
+
+PLASMIC.registerComponent(Tester, {
+  props: {},
+  name: 'bos-tester',
+  importName: 'Tester',
+  displayName: '[BOS] Tester',
+  importPath: '@/components/code',
+});
 
 PLASMIC.registerComponent(GenericBOS, {
   name: 'bos-generic',
@@ -66,35 +75,35 @@ PLASMIC.registerComponent(ZKEVM, {
   displayName: '[BOS] ZK-EVM',
 })
 
-// Registration
-PLASMIC.registerComponent(CodeComponent, {
-  name: 'CodeComponent',
-  props: {
-    //
-    value: {
-      type: "slot",
-      defaultValue: [
-        //
-      ]
-    }
-  },
-  actions: [
-    {
-      type: 'button-action',
-      label: 'Append new element',
-      onClick: ({ studioOps }) => {
-        console.log('studioops', studioOps)
-        studioOps.appendToSlot(
-          {
-            type: 'img',
-            src: '',
-            styles: {
-              maxWidth: '100%'
-            }
-          },
-          'value'
-        );
-      }
-    }
-  ]
-});
+// // Registration
+// PLASMIC.registerComponent(CodeComponent, {
+//   name: 'CodeComponent',
+//   props: {
+//     //
+//     value: {
+//       type: "slot",
+//       defaultValue: [
+//         //
+//       ]
+//     }
+//   },
+//   actions: [
+//     {
+//       type: 'button-action',
+//       label: 'Append new element',
+//       onClick: ({ studioOps }) => {
+//         console.log('studioops', studioOps)
+//         studioOps.appendToSlot(
+//           {
+//             type: 'img',
+//             src: '',
+//             styles: {
+//               maxWidth: '100%'
+//             }
+//           },
+//           'value'
+//         );
+//       }
+//     }
+//   ]
+// });

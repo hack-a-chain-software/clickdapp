@@ -8,6 +8,7 @@ import {
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
+import { VMContextProvider } from '@/custom-context';
 import { PLASMIC } from '../plasmic-init';
 
 /**
@@ -82,7 +83,9 @@ export default function CatchallPage(props: { plasmicData?: ComponentRenderData;
         {
           // pageMeta.displayName contains the name of the component you fetched.
         }
-        <PlasmicComponent component={pageMeta.displayName} />
+        <VMContextProvider>
+          <PlasmicComponent component={pageMeta.displayName} />
+        </VMContextProvider>
       </PlasmicRootProvider>
   );
 }

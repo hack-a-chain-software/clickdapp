@@ -4,10 +4,11 @@ export const borrow = () => {
   const {
     plasmicRootClassName,
     renderPlasmicElement,
-    priceFeedAddress = '0x07dD4Ce17De84bA13Fc154A7FdB46fC362a41E2C',
-    troveManagerAddress = '0x0ECDF34731eE8Dd46caa99a1AAE173beD1B32c67',
-    borrowerOperationAddress = '0xD69fC8928D4F3229341cb431263F1EBd87B1ade8',
   } = props || {};
+
+  const priceFeedAddress = '0x07dD4Ce17De84bA13Fc154A7FdB46fC362a41E2C'
+  const troveManagerAddress = '0x0ECDF34731eE8Dd46caa99a1AAE173beD1B32c67'
+  const borrowerOperationAddress = '0xD69fC8928D4F3229341cb431263F1EBd87B1ade8'
 
   State.init({
     msg: "",
@@ -34,7 +35,7 @@ export const borrow = () => {
 
   // Load ABIs
   const priceFeedAbi = fetch("https://raw.githubusercontent.com/1Mateus/ethlisbon_poc/main/src/abi/price-feed-abi.json")
-  const troverManagerAbi = fetch("https://raw.githubusercontent.com/1Mateus/ethlisbon_poc/main/src/abi/trove-manager-abi.json")
+  const troveManagerAbi = fetch("https://raw.githubusercontent.com/1Mateus/ethlisbon_poc/main/src/abi/trove-manager-abi.json")
   const borrowerOperationAbi = fetch("https://raw.githubusercontent.com/1Mateus/ethlisbon_poc/main/src/abi/borrower-operation-abi.json")
 
   const setcoll = (depositChangeEvent) => {
@@ -198,6 +199,7 @@ export const borrow = () => {
         priceFeedAbi.body,
         Ethers.provider().getSigner()
       );
+
       const troveManagerContract = new ethers.Contract(
         troveManagerAddress,
         troveManagerAbi.body,
