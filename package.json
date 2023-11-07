@@ -15,6 +15,10 @@
   "dependencies": {
     "@braintree/sanitize-url": "6.0.0",
     "@chakra-ui/react": "^2.8.1",
+    "@keypom/selector": "^1.2.3",
+    "@liquity/lib-base": "^3.0.0",
+    "@liquity/lib-ethers": "^3.4.0",
+    "@monaco-editor/react": "^4.6.0",
     "@near-js/biometric-ed25519": "0.2.0",
     "@near-wallet-selector/core": "8.1.1",
     "@near-wallet-selector/modal-ui": "8.1.1",

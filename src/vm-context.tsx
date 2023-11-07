@@ -8,11 +8,11 @@ export interface EventInterface {
 }
 
 interface VMContextValue {
-  state: any;
-  events: any[];
-  dispatchState: (value: any) => void;
-  registerEvent: (event: any) => void;
-  dispatchEvent: (event: any) => void | undefined;
+  state: StateType;
+  events: EventInterface[];
+  dispatchState: (value: StateType) => void;
+  registerEvent: (event: EventInterface) => void;
+  dispatchEvent: (name: string) => void | undefined;
 }
 
 const initialState = {};

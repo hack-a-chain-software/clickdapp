@@ -1,6 +1,6 @@
 import React from 'react';
 import { VmComponent } from '@/components/vm/VmComponent';
-import { useVMContext } from '@/custom-context';
+import { useVMContext } from '@/vm-context';
 
 export function Borrow(props: any) {
   const context = useVMContext()
