@@ -1,9 +1,11 @@
 export * from './gmx'
+export * from './lib'
 export * from './lido'
 export * from './liquity'
 export * from './zk-evm'
 export * from './tester'
 export * from './generic'
+export * from './indexer'
 export * from './web3connect'
 
 // // A code component that just renders the prop

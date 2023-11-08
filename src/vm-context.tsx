@@ -8,7 +8,7 @@ export interface EventInterface {
 }
 
 interface VMContextValue {
-  state: StateType;
+  global: StateType;
   events: EventInterface[];
   dispatchState: (value: StateType) => void;
   registerEvent: (event: EventInterface) => void;
@@ -18,7 +18,7 @@ interface VMContextValue {
 const initialState = {};
 
 const VMContext = createContext<VMContextValue>({
-  state: {},
+  global: {},
   events: [],
   dispatchState: () => {},
   dispatchEvent: () => {},
@@ -52,7 +52,7 @@ const VMContextProvider = ({ children }: any) => {
   const dispatchState = (value: StateType) => dispatch(value)
 
   return (
-    <VMContext.Provider value={{ state, events, dispatchEvent, registerEvent, dispatchState }}>
+    <VMContext.Provider value={{ global: state, events, dispatchEvent, registerEvent, dispatchState }}>
       {children}
     </VMContext.Provider>
   );

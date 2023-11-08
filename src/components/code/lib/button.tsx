@@ -1,10 +1,10 @@
-import { VmComponent } from '@/components/vm/VmComponent';
+import { Button as ButtonChakra } from "@chakra-ui/react";
 
-export const web3Meta: any = {
-  name: 'bos-web3connect',
-  importName: 'Web3Connect',
+export const buttonMeta = {
+  name: 'ui-button',
+  importName: 'Button',
+  displayName: '[UI] Button',
   importPath: '@/components/code',
-  displayName: '[BOS] Web3Connect',
   props: {
     size: {
       type: "choice",
@@ -48,28 +48,14 @@ export const web3Meta: any = {
     isLoading: {
       type: "boolean",
     },
-    connectingLabel: {
-      type: "string",
-      defaultValue: "Connecting...",
-    },
-    disconnectLabel: {
-      type: "string",
-      defaultValue: "Disconnect",
-    },
-    connectLabel: {
-      type: "string",
-      defaultValue: "Connect",
+    children: {
+      type: "slot",
+      defaultValue: {
+        type: "text",
+        value: "Button",
+      },
     },
   },
-};
-
-export function Web3Connect(props: any) {
-  return (
-    <div>
-      <VmComponent
-        src="1mateus.testnet/widget/web3connect"
-        props={{...props}}
-      />
-    </div>
-  );
 }
+
+export const Button = ButtonChakra

@@ -1,20 +1,36 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 
-import { Button, Input, Text } from "@chakra-ui/react";
-
 import {
+  // Components
+  Img,
+  Card,
   Lido,
-  ZKEVM,
-  Gmx,
+  Text,
+  Input,
+  Tester,
+  Button,
   Borrow,
   GenericBOS,
+  IndexerView,
+  IndexerList,
   Web3Connect,
-  Tester,
-  // CodeComponent,
-  // CustomProp,
-} from '@/components/code'
 
-import { buttonMeta, borrowMeta, inputMeta, textMeta, web3meta } from "./utils/register";
+  // Components Meta
+  imgMeta,
+  web3Meta,
+  cardMeta,
+  textMeta,
+  inputMeta,
+  buttonMeta,
+  borrowMeta,
+  indexerViewMeta,
+  IndexerListMeta,
+
+  // Gmx,
+  // ZKEVM,
+  // CustomProp,
+  // CodeComponent,
+} from '@/components/code'
 
 export const PLASMIC = initPlasmicLoader({
     projects: [
@@ -26,12 +42,15 @@ export const PLASMIC = initPlasmicLoader({
     preview: process.env.NODE_ENV === 'development',
 })
 
+PLASMIC.registerComponent(Img, imgMeta)
+PLASMIC.registerComponent(Card, cardMeta)
 PLASMIC.registerComponent(Text, textMeta)
 PLASMIC.registerComponent(Input, inputMeta)
 PLASMIC.registerComponent(Button, buttonMeta)
-PLASMIC.registerComponent(Borrow, borrowMeta);
-PLASMIC.registerComponent(Web3Connect, web3meta)
-
+PLASMIC.registerComponent(Borrow, borrowMeta)
+PLASMIC.registerComponent(Web3Connect, web3Meta)
+PLASMIC.registerComponent(IndexerView, indexerViewMeta)
+PLASMIC.registerComponent(IndexerList, IndexerListMeta)
 
 PLASMIC.registerComponent(Tester, {
   props: {},
@@ -57,11 +76,11 @@ PLASMIC.registerComponent(GenericBOS, {
   }
 });
 
-PLASMIC.registerComponent(Gmx, {
-  props: {},
-  name: 'bos-gmx',
-  displayName: '[BOS] Gmx',
-})
+// PLASMIC.registerComponent(Gmx, {
+//   props: {},
+//   name: 'bos-gmx',
+//   displayName: '[BOS] Gmx',
+// })
 
 PLASMIC.registerComponent(Lido, {
   props: {},
@@ -69,11 +88,11 @@ PLASMIC.registerComponent(Lido, {
   displayName: '[BOS] Lido',
 })
 
-PLASMIC.registerComponent(ZKEVM, {
-  props: {},
-  name: 'bos-zk-evm',
-  displayName: '[BOS] ZK-EVM',
-})
+// PLASMIC.registerComponent(ZKEVM, {
+//   props: {},
+//   name: 'bos-zk-evm',
+//   displayName: '[BOS] ZK-EVM',
+// })
 
 // // Registration
 // PLASMIC.registerComponent(CodeComponent, {
