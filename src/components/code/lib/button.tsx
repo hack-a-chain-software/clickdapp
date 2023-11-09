@@ -56,6 +56,23 @@ export const buttonMeta = {
       },
     },
   },
+  defaultStyles: {
+    'color': '#fff',
+    'width': '100%',
+    'height': '51px',
+    'display': 'flex',
+    'max-width': '100%',
+    'font-size': '18px',
+    'font-weight': '500',
+    'text-align': 'left',
+    'padding-top': '4px',
+    'object-fit': 'cover',
+    'background': '#1B6DFF',
+    'padding-bottom': '4px',
+    'font-family': 'Poppins',
+    'flex-direction': 'row',
+    'border-radius': '12px',
+  }
 }
 
 export const Button = ButtonChakra

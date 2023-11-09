@@ -11,3 +11,22 @@
   min-height: unset !important;
   white-space: normal !important;
 }
+
+.bos input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bos button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+*:focus-within {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+button[data-active] {
+  opacity: 0.8;
+}

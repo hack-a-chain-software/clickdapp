@@ -6,6 +6,7 @@ export * from './zk-evm'
 export * from './tester'
 export * from './generic'
 export * from './indexer'
+export * from './balance'
 export * from './web3connect'
 
 // // A code component that just renders the prop

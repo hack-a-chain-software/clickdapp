@@ -4,15 +4,19 @@ import {
   // Components
   Img,
   Card,
-  Lido,
+  // Lido,
   Text,
   Input,
-  Tester,
+  // Tester,
   Button,
   Borrow,
+  Payoff,
+  Manage,
+  Balance,
+  Checkbox,
   GenericBOS,
-  IndexerView,
-  IndexerList,
+  // IndexerView,
+  // IndexerList,
   Web3Connect,
 
   // Components Meta
@@ -22,9 +26,13 @@ import {
   textMeta,
   inputMeta,
   buttonMeta,
+  manageMeta,
   borrowMeta,
-  indexerViewMeta,
-  IndexerListMeta,
+  payoffMeta,
+  balanceMeta,
+  checkboxMeta,
+  // indexerViewMeta,
+  // IndexerListMeta,
 
   // Gmx,
   // ZKEVM,
@@ -42,23 +50,31 @@ export const PLASMIC = initPlasmicLoader({
     preview: process.env.NODE_ENV === 'development',
 })
 
+// Register UI
 PLASMIC.registerComponent(Img, imgMeta)
 PLASMIC.registerComponent(Card, cardMeta)
 PLASMIC.registerComponent(Text, textMeta)
 PLASMIC.registerComponent(Input, inputMeta)
 PLASMIC.registerComponent(Button, buttonMeta)
-PLASMIC.registerComponent(Borrow, borrowMeta)
-PLASMIC.registerComponent(Web3Connect, web3Meta)
-PLASMIC.registerComponent(IndexerView, indexerViewMeta)
-PLASMIC.registerComponent(IndexerList, IndexerListMeta)
+PLASMIC.registerComponent(Balance, balanceMeta)
+PLASMIC.registerComponent(Checkbox, checkboxMeta)
 
-PLASMIC.registerComponent(Tester, {
-  props: {},
-  name: 'bos-tester',
-  importName: 'Tester',
-  displayName: '[BOS] Tester',
-  importPath: '@/components/code',
-});
+// Register Liquity components
+PLASMIC.registerComponent(Borrow, borrowMeta)
+PLASMIC.registerComponent(Manage, manageMeta)
+PLASMIC.registerComponent(Payoff, payoffMeta)
+PLASMIC.registerComponent(Web3Connect, web3Meta)
+
+// PLASMIC.registerComponent(IndexerView, indexerViewMeta)
+// PLASMIC.registerComponent(IndexerList, IndexerListMeta)
+
+// PLASMIC.registerComponent(Tester, {
+//   props: {},
+//   name: 'bos-tester',
+//   importName: 'Tester',
+//   displayName: '[BOS] Tester',
+//   importPath: '@/components/code',
+// });
 
 PLASMIC.registerComponent(GenericBOS, {
   name: 'bos-generic',
@@ -82,11 +98,11 @@ PLASMIC.registerComponent(GenericBOS, {
 //   displayName: '[BOS] Gmx',
 // })
 
-PLASMIC.registerComponent(Lido, {
-  props: {},
-  name: 'bos-lido',
-  displayName: '[BOS] Lido',
-})
+// PLASMIC.registerComponent(Lido, {
+//   props: {},
+//   name: 'bos-lido',
+//   displayName: '[BOS] Lido',
+// })
 
 // PLASMIC.registerComponent(ZKEVM, {
 //   props: {},

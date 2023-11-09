@@ -16,6 +16,11 @@ export const textMeta = {
       ],
     },
   },
+  defaultStyles: {
+    'color': 'white',
+    'font-size': '18px',
+    'font-weight': '500'
+  }
 }
 
 export const Text = TextChakra

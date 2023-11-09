@@ -2,11 +2,11 @@ import React from 'react';
 import { VmComponent } from '@/components/vm/VmComponent';
 import { useVMContext } from '@/vm-context';
 
-export const borrowMeta: any = {
-  name: 'bos-liquity-borrow',
-  displayName: '[Liquity] Borrow',
+export const manageMeta: any = {
+  name: 'bos-liquity-manage',
+  displayName: '[Liquity] Manage',
   importPath: '@/components/code',
-  importName: 'Borrow',
+  importName: 'Manage',
   defaultStyles: {
     padding: '16px',
     display: 'flex',
@@ -23,18 +23,9 @@ export const borrowMeta: any = {
           name: 'ui-input',
           type: "component",
         }
-      ],
-    },
-    text: {
-      type: "slot",
-      defaultValue: [
-        {
-          name: 'ui-text',
-          type: "component",
-        }
       ]
     },
-    textInput: {
+    textLabel: {
       type: "slot",
       defaultValue: [
         {
@@ -61,7 +52,25 @@ export const borrowMeta: any = {
         }
       ]
     },
-    button: {
+    typeButton: {
+      type: "slot",
+      defaultValue: [
+        {
+          name: 'ui-button',
+          type: "component",
+        }
+      ]
+    },
+    tokenButton: {
+      type: "slot",
+      defaultValue: [
+        {
+          name: 'ui-button',
+          type: "component",
+        }
+      ]
+    },
+    actionButton: {
       type: "slot",
       defaultValue: [
         {
@@ -73,7 +82,7 @@ export const borrowMeta: any = {
   },
 };
 
-export function Borrow(props: any) {
+export function Manage(props: any) {
   const context = useVMContext()
 
   const renderPlasmicElement = (element: any, values: any) => {
@@ -82,7 +91,7 @@ export function Borrow(props: any) {
 
   return (
     <VmComponent
-      src="1mateus.testnet/widget/borrow"
+      src="1mateus.testnet/widget/manage"
       props={{
         ...context,
         renderPlasmicElement,
