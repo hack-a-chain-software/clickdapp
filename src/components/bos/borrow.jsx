@@ -1,4 +1,4 @@
-const { dispatchState, plasmicRootClassName, renderPlasmicElement } =
+const { global, dispatchState, plasmicRootClassName, renderPlasmicElement } =
   props || {};
 
 const priceFeedAbi = fetch(
@@ -17,8 +17,17 @@ if (
   !borrowerOperationAbi ||
   !renderPlasmicElement
 ) {
-  return;
+  return "loading...";
 }
+
+const {
+  chainId,
+  address,
+  balanceETH,
+  isOpenTrove,
+} = global
+
+const balance = global?.balanceETH
 
 const priceFeedAddress = "0x07dD4Ce17De84bA13Fc154A7FdB46fC362a41E2C";
 const troveManagerAddress = "0x0ECDF34731eE8Dd46caa99a1AAE173beD1B32c67";
@@ -40,11 +49,6 @@ State.init({
   borrowingFee: 0,
   collateralRatio: 0,
   liquidationReserve: 200,
-
-  address: undefined,
-  balance: undefined,
-  chainId: undefined,
-  isOpenTrove: undefined,
 });
 
 const setcoll = (depositChangeEvent) => {
@@ -91,7 +95,7 @@ const setBorrow = (borrowChangeEvent) => {
 };
 
 const validateTrove = () => {
-  const { coll, borrow, totalcoll, balance } = state;
+  const { coll, borrow, totalcoll } = state;
 
   if (borrow < 1800) {
     State.update({
@@ -165,47 +169,7 @@ const openTrove = () => {
     });
 };
 
-if (Ethers.provider()) {
-  const signer = Ethers.provider().getSigner();
-  signer.getAddress().then((address) => {
-    State.update({ address });
-    if (state.chainId === 11155111) {
-      if (state.balance === undefined) {
-        Ethers.provider()
-          .getBalance(address)
-          .then((balance) => {
-            State.update({
-              balance: Big(balance).div(Big(10).pow(18)).toFixed(2),
-            });
-          });
-      }
-
-      if (state.isOpenTrove === undefined) {
-        const troveManagerContract = new ethers.Contract(
-          troveManagerAddress,
-          troveManagerAbi.body,
-          Ethers.provider().getSigner()
-        );
-
-        troveManagerContract.getTroveStatus(address).then((res) => {
-          const isOpenTrove = ethers.utils.formatEther(res).includes("1");
-
-          State.update({ isOpenTrove });
-
-          dispatchState({ isOpenTrove });
-        });
-      }
-    }
-  });
-
-  Ethers.provider()
-    .getNetwork()
-    .then((chainIdData) => {
-      if (chainIdData?.chainId) {
-        State.update({ chainId: chainIdData.chainId });
-      }
-    });
-
+if (address && chainId === 11155111) {
   if (state.price === 0) {
     const priceFeedContract = new ethers.Contract(
       priceFeedAddress,
@@ -265,7 +229,7 @@ return (
         value: state.displayColl,
         placeholder: "0.0000 ETH",
         disabled:
-          !state.address || state.isOpenTrove || state.chainId !== 11155111,
+          !address || isOpenTrove || chainId !== 11155111,
       })}
     </div>
 
@@ -278,7 +242,7 @@ return (
         value: state.displayBorrow,
         placeholder: "0.0000 LUSD",
         disabled:
-          !state.address || state.isOpenTrove || state.chainId !== 11155111,
+          !address || isOpenTrove || chainId !== 11155111,
       })}
     </div>
 
@@ -342,14 +306,14 @@ return (
       onClick: openTrove,
       isDisabled:
         state.isBlocked ||
-        state.isOpenTrove === true ||
+        isOpenTrove === true ||
         state.coll === 0 ||
         state.borrow === 0,
-      children: !state.address
+      children: !address
         ? "Connect Wallet"
-        : Ethers.provider() && state.chainId !== 11155111
+        : Ethers.provider() && chainId !== 11155111
         ? "Change network to Sepolia"
-        : state?.isOpenTrove === true
+        : isOpenTrove === true
         ? "You already have active Trove"
         : state?.loading
         ? "Loading..."

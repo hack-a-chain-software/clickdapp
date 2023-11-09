@@ -15,8 +15,8 @@ import {
   Balance,
   Checkbox,
   GenericBOS,
-  // IndexerView,
-  // IndexerList,
+  IndexerView,
+  IndexerList,
   Web3Connect,
 
   // Components Meta
@@ -31,8 +31,8 @@ import {
   payoffMeta,
   balanceMeta,
   checkboxMeta,
-  // indexerViewMeta,
-  // IndexerListMeta,
+  indexerViewMeta,
+  IndexerListMeta,
 
   // Gmx,
   // ZKEVM,
@@ -65,8 +65,8 @@ PLASMIC.registerComponent(Manage, manageMeta)
 PLASMIC.registerComponent(Payoff, payoffMeta)
 PLASMIC.registerComponent(Web3Connect, web3Meta)
 
-// PLASMIC.registerComponent(IndexerView, indexerViewMeta)
-// PLASMIC.registerComponent(IndexerList, IndexerListMeta)
+PLASMIC.registerComponent(IndexerView, indexerViewMeta)
+PLASMIC.registerComponent(IndexerList, IndexerListMeta)
 
 // PLASMIC.registerComponent(Tester, {
 //   props: {},

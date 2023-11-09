@@ -24,8 +24,14 @@ if (
   !borrowerOperationAbi ||
   !renderPlasmicElement
 ) {
-  return "";
+  return "loading...";
 }
+
+const {
+  chainId,
+  address,
+  isOpenTrove,
+} = global
 
 State.init({
   option: "withdraw",
@@ -57,7 +63,6 @@ const infoHandler = () => {
       }
     });
 
-  // Price 조회
   const encodedForPrice = priceFeedInterface.encodeFunctionData("getPrice");
 
   Ethers.provider()
@@ -77,10 +82,9 @@ const infoHandler = () => {
       });
     });
 
-  // ICR 조회
   const encodedForICR = troveManageInterface.encodeFunctionData(
     "getCurrentICR",
-    [state.address, state.currentPriceRaw || "2000000000000000000000"]
+    [address, state.currentPriceRaw || "2000000000000000000000"]
   );
 
   Ethers.provider()
@@ -97,10 +101,9 @@ const infoHandler = () => {
       State.update({ currentICR: result.toString() });
     });
 
-  // Collateral 조회
   const encodedForColl = troveManageInterface.encodeFunctionData(
     "getTroveColl",
-    [state.address]
+    [address]
   );
   Ethers.provider()
     .call({
@@ -119,10 +122,9 @@ const infoHandler = () => {
       });
     });
 
-  // debt 조회
   const encodedForDebt = troveManageInterface.encodeFunctionData(
     "getTroveDebt",
-    [state.address]
+    [address]
   );
 
   Ethers.provider()
@@ -140,19 +142,11 @@ const infoHandler = () => {
     });
 };
 
-if (Ethers.provider()) {
-  const signer = Ethers.provider().getSigner();
-
-  signer.getAddress().then((address) => {
-    State.update({ address });
-  });
-
-  state.address && infoHandler();
+if (address) {
+  infoHandler();
 }
 
 const checkFunc = () => {
-  // Ratio 1.1 이상일 것
-  // Debt 가 2000 이상일 것
   if (state.token === "ETH") {
     if (!state.value) {
       State.update({
@@ -302,7 +296,7 @@ const confirmHandler = () => {
 
   if (state.option === "deposit" && state.token === "ETH") {
     borrowerOperationsContract
-      .addColl(state.address, state.address, { value: amount })
+      .addColl(address, address, { value: amount })
       .then((transactionHash) => {
         State.update({
           loading: true,
@@ -316,7 +310,7 @@ const confirmHandler = () => {
       });
   } else if (state.option === "withdraw" && state.token === "ETH") {
     borrowerOperationsContract
-      .withdrawColl(amount.toString(), state.address, state.address)
+      .withdrawColl(amount.toString(), address, address)
       .then((transactionHash) => {
         State.update({
           loading: true,
@@ -330,7 +324,7 @@ const confirmHandler = () => {
       });
   } else if (state.option === "deposit" && state.token === "LUSD") {
     borrowerOperationsContract
-      .repayLUSD(amount.toString(), state.address, state.address)
+      .repayLUSD(amount.toString(), address, address)
       .then((transactionHash) => {
         State.update({
           loading: true,
@@ -347,8 +341,8 @@ const confirmHandler = () => {
       .withdrawLUSD(
         "5000000000000000",
         amount.toString(),
-        state.address,
-        state.address
+        address,
+        address
       )
       .then((transactionHash) => {
         State.update({
@@ -389,7 +383,7 @@ return (
       {renderPlasmicElement("typeButton", {
         children: "Deposit",
         isActive: state.option === "deposit",
-        isDisabled: !state.address || state.isOpenTrove,
+        isDisabled: !address || !isOpenTrove,
         onClick: () => {
           optionHandler("deposit");
         },
@@ -397,7 +391,7 @@ return (
 
       {renderPlasmicElement("typeButton", {
         children: "Withdraw",
-        isDisabled: !state.address || state.isOpenTrove,
+        isDisabled: !address || !isOpenTrove,
         isActive: state.option === "withdraw",
         onClick: () => {
           optionHandler("withdraw");
@@ -410,14 +404,14 @@ return (
         type: "text",
         value: state.value,
         onChange: changeHandler,
-        isDisabled: !state.address || state.isOpenTrove,
+        isDisabled: !address || !isOpenTrove,
         placeholder: state.token === "ETH" ? "0.0000 ETH" : "0.0000 LUSD",
       })}
 
       <div className="flex">
         {renderPlasmicElement("tokenButton", {
           children: "ETH",
-          isDisabled: !state.address || state.isOpenTrove,
+          isDisabled: !address || !isOpenTrove,
           isActive: state.token === "ETH",
           onClick: () => {
             tokenHandler("ETH");
@@ -426,7 +420,7 @@ return (
 
         {renderPlasmicElement("tokenButton", {
           children: "LUSD",
-          isDisabled: !state.address || state.isOpenTrove,
+          isDisabled: !address || !isOpenTrove,
           isActive: state.token === "LUSD",
           onClick: () => {
             tokenHandler("LUSD");
@@ -546,15 +540,15 @@ return (
     {renderPlasmicElement("actionButton", {
       onClick: confirmHandler,
       isDisabled:
-        state.chainId !== 11155111 ||
+        chainId !== 11155111 ||
         !state.value ||
         !state.check ||
-        !state.address,
-      children: !state.address
+        !address,
+      children: !address
         ? "Connect Wallet"
-        : state.chainId !== 11155111
+        : chainId !== 11155111
         ? "Change network to Sepolia"
-        : global?.isOpenTrove === false
+        : isOpenTrove === false
         ? "Open Trove"
         : state.loading
         ? "Loadig..."

@@ -4,16 +4,22 @@ const lusdTokenAbi = fetch(
   "https://raw.githubusercontent.com/IDKNWHORU/liquity-sepolia/main/lusd-token-abi.json"
 );
 
-if (!lusdTokenAbi || !renderPlasmicElement) {
+const troveManagerAbi = fetch(
+  "https://raw.githubusercontent.com/1Mateus/ethlisbon_poc/main/src/abi/trove-manager-abi.json"
+);
+
+if (!lusdTokenAbi || !troveManagerAbi || !renderPlasmicElement) {
   return;
 }
 const lusdTokenAddress = "0x80668Ed2e71290EB7526ABE936327b4f5dB52dA8";
+const troveManagerAddress = "0x0ECDF34731eE8Dd46caa99a1AAE173beD1B32c67";
 
 State.init({
   address: undefined,
   chainId: undefined,
   balanceETH: undefined,
   balanceLUSD: undefined,
+  isOpenTrove: undefined,
 });
 
 if (Ethers.provider()) {
@@ -54,6 +60,22 @@ if (Ethers.provider()) {
           dispatchState({ balanceLUSD: lusdBalance })
         });
       }
+    }
+
+    if (state.isOpenTrove === undefined) {
+      const troveManagerContract = new ethers.Contract(
+        troveManagerAddress,
+        troveManagerAbi.body,
+        Ethers.provider().getSigner()
+      );
+
+      troveManagerContract.getTroveStatus(address).then((res) => {
+        const isOpenTrove = ethers.utils.formatEther(res).includes("1");
+
+        State.update({ isOpenTrove });
+
+        dispatchState({ isOpenTrove });
+      });
     }
   });
 
