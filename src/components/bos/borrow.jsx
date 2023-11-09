@@ -1,4 +1,5 @@
-const { dispatchState, plasmicRootClassName, renderPlasmicElement } = props || {};
+const { dispatchState, plasmicRootClassName, renderPlasmicElement } =
+  props || {};
 
 const priceFeedAbi = fetch(
   "https://raw.githubusercontent.com/1Mateus/ethlisbon_poc/main/src/abi/price-feed-abi.json"

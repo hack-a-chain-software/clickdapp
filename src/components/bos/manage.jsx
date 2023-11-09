@@ -549,8 +549,7 @@ return (
         state.chainId !== 11155111 ||
         !state.value ||
         !state.check ||
-        !state.address ||
-        global?.isOpenTrove === false,
+        !state.address,
       children: !state.address
         ? "Connect Wallet"
         : state.chainId !== 11155111
