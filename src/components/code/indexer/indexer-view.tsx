@@ -8,38 +8,56 @@ export const indexerViewMeta = {
   importPath: '@/components/code',
   importName: 'IndexerView',
   props: {
-    text: {
+    table: {
       type: "slot",
       defaultValue: [
         {
-          name: 'ui-text',
+          name: 'ui-table',
           type: "component",
         }
       ]
     },
-    subtext: {
+    thead: {
       type: "slot",
       defaultValue: [
         {
-          name: 'ui-text',
+          name: 'ui-table-head',
           type: "component",
         }
       ]
     },
-    img: {
+    tbody: {
       type: "slot",
       defaultValue: [
         {
-          name: 'ui-img',
+          name: 'ui-table-body',
           type: "component",
         }
       ]
     },
-    card: {
+    tr: {
       type: "slot",
       defaultValue: [
         {
-          name: 'ui-card',
+          name: 'ui-table-tr',
+          type: "component",
+        }
+      ]
+    },
+    th: {
+      type: "slot",
+      defaultValue: [
+        {
+          name: 'ui-table-th',
+          type: "component",
+        }
+      ]
+    },
+    td: {
+      type: "slot",
+      defaultValue: [
+        {
+          name: 'ui-table-td',
           type: "component",
         }
       ]
@@ -48,6 +66,8 @@ export const indexerViewMeta = {
 }
 
 export function IndexerView (props: any) {
+  console.log('props', props)
+
   const context = useVMContext()
 
   const renderPlasmicElement = (element: any, values: any) => {
