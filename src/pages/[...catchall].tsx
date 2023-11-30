@@ -8,6 +8,7 @@ import {
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
+import { VMContextProvider } from '@/vm-context';
 import { PLASMIC } from '../plasmic-init';
 
 /**
@@ -30,9 +31,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { catchall } = context.params ?? {};
 
   // Convert the catchall param into a path string
-  const plasmicPath =
-    typeof catchall === 'string' ? catchall : Array.isArray(catchall) ? `/${catchall.join('/')}` : '/';
+  const plasmicPath = typeof catchall === 'string' ? catchall : Array.isArray(catchall) ? `/${catchall.join('/')}` : '/';
+
   const plasmicData = await PLASMIC.maybeFetchComponentData(plasmicPath);
+
   if (!plasmicData) {
     // This is some non-Plasmic catch-all page
     return {
@@ -71,18 +73,19 @@ export default function CatchallPage(props: { plasmicData?: ComponentRenderData;
   }
   const pageMeta = plasmicData.entryCompMetas[0];
   return (
-    // Pass in the data fetched in getStaticProps as prefetchedData
-    <PlasmicRootProvider
-      loader={PLASMIC}
-      prefetchedData={plasmicData}
-      prefetchedQueryData={queryCache}
-      pageParams={pageMeta.params}
-      pageQuery={router.query}
-    >
-      {
-        // pageMeta.displayName contains the name of the component you fetched.
-      }
-      <PlasmicComponent component={pageMeta.displayName} />
-    </PlasmicRootProvider>
+      <PlasmicRootProvider
+        loader={PLASMIC}
+        prefetchedData={plasmicData}
+        prefetchedQueryData={queryCache}
+        pageParams={pageMeta.params}
+        pageQuery={router.query}
+      >
+        {
+          // pageMeta.displayName contains the name of the component you fetched.
+        }
+        <VMContextProvider>
+          <PlasmicComponent component={pageMeta.displayName} />
+        </VMContextProvider>
+      </PlasmicRootProvider>
   );
 }
