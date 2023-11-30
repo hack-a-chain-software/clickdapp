@@ -9,6 +9,9 @@ If you have any problems configuring your enviroment, or hosting this app, remem
 -----------------
 ### Dependencies
 
+- **PNPM**: [PNPM Installation](https://pnpm.io/installation).
+- **Node.js**: [nvm (Node Version Manager)](https://github.com/nvm-sh/nvm).
+
 ### Runing Local
 
 The ClickdApp repository is based on Plasmic App Hosting ([Plasmic App Hosting Documentation](https://docs.plasmic.app/learn/app-hosting/)), which acts as the infrastructure for Plasmic Studio projects. For more information about Plasmic Studio, visit [Plasmic Studio](https://studio.plasmic.app/).
