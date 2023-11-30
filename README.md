@@ -1,16 +1,15 @@
 # Clickdapp
-The clickdapp is a repository that implements Plasmic App Hosting and Near VM to provides powerful tools to make dapps with Plasmic Studio.
-
-## Installation
 ClickDapp is powered by [**Plasmic**](https://github.com/plasmicapp/plasmic).
 
-If you have any problems configuring your enviroment, or hosting this app, remember to read the [Plasmic App Hosting Documentation](https://docs.plasmic.app/learn/app-hosting/).
+The clickdapp is a repository that implements Plasmic App Hosting and Near VM to provides powerful tools to make dapps with Plasmic Studio.
 
------------------
-### Dependencies
-
+## Dependencies
 - **PNPM**: [PNPM Installation](https://pnpm.io/installation).
 - **Node.js**: [nvm (Node Version Manager)](https://github.com/nvm-sh/nvm).
+
+## Installation
+
+If you have any problems configuring your enviroment, or hosting this app, remember to read the [Plasmic App Hosting Documentation](https://docs.plasmic.app/learn/app-hosting/).
 
 ### Runing Local
 
