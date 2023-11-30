@@ -12,7 +12,7 @@ Code components in Plasmic allow developers to extend the functionality of the P
 
 Like this:
 
-```bash
+```javascript
 import { VmComponent } from '@/components/vm/VmComponent';
 
 const exampleMeta = {
@@ -39,7 +39,7 @@ The second parameter meta is an object containing metadata about the component. 
 
 Like this:
 
-```bash
+```javascript
 import { VmComponent } from '@/components/vm/VmComponent';
 
 const exampleMeta = {
@@ -72,7 +72,7 @@ Within the props property of the Metadata object, there is a special property ty
 
 Like this:
 
-```bash
+```javascript
 const exampleMeta: = {
   name: 'bos-example',
   displayName: '[BOS] Example',
@@ -93,8 +93,218 @@ const exampleMeta: = {
 
 When using the slot type in a component's props within the Plasmic metadata object, you receive, through the component's props, elements that are controlled by Plasmic. This means you can render these elements anywhere within your React component. Essentially, you can act as a proxy, passing these Plasmic-controlled components down to the BOS component.
 
-## BOS VM Context
+We received a React Element Object from Plasmic. A React element object is a virtual representation of an element in a React application. While it may resemble a React component, it cannot be rendered directly using the JSX syntax <Element />. Instead, you should use the {element} syntax to insert it into a JSX component.
 
+React Element Objects do not allow us to customize the properties of the component when used. For example, we cannot add different events, classes, or states to the component.
+
+To customize properties for Plasmic components, like adding click events to buttons or listening to input events, we have introduced a callback function called renderPlasmicElement for all components loaded from the BOS in the ClickdApp.
+
+Its purpose is straightforward: the function takes two arguments. The first argument corresponds to which element within the Props you want to utilize, and the second corresponds to the properties you wish to add to the Plasmic UI component. It returns a clone of the React element object with the added properties.
+
+The function:
+
+```javascript
+const renderPlasmicElement = (element, values) => {
+  return React.cloneElement(props[element], values)
+}
+```
+
+The styling format based on the creation of clones will most likely be modified in upcoming versions of ClickdApp
+
+This way, for the following Plasmic Code Component:
+
+```javascript
+// Meta Props
+const exampleMeta: = {
+  name: 'bos-example',
+  displayName: '[BOS] Example',
+  importPath: '@/components/code',
+  importName: 'Example',
+  props: {
+    input: {
+      type: "slot",
+      defaultValue: [
+        {
+          name: 'ui-input',
+          type: "component",
+        }
+      ],
+    },
+};
+
+// Code component
+const Example = (props) => {
+  const renderPlasmicElement = (element, values) => {
+    return React.cloneElement(props[element], values)
+  }
+
+  return (
+    <VmComponent
+      src="example/path/to/bos"
+	  props={{
+        renderPlasmicElement,
+        plasmicRootClassName: props.className,
+      }}
+    />
+  )
+}
+```
+
+We could load a BOS component like this:
+
+```javascript
+// BOS component
+const { renderPlasmicElement, plasmicRootClassName } = props;
+
+State.init({
+  value: "",
+});
+
+return (
+  <div className={plasmicRootClassName}>
+    {renderPlasmicElement("input", {
+      type: "text",
+      name: "description",
+      value: state.description,
+      placeholder: "Description",
+      onChange: (e) => State.update({ value: e.target.value }),
+    })}
+  </div>
+);
+```
+
+## BOS VM Context
+The VM Context is a system designed for state and event management of ClickDapp. It is built on the React Context API, which enables components to share state and event handlers without the need to prop-drill or pass down information through intermediary components. 
+
+This code establishes a "VMContext" with the ability to hold a global state and an array of event objects. Components can register new events and trigger them, as well as update the global state, by calling the provided functions. 
+
+The system is deliberately "agnostic," meaning it doesn't prescribe specific states or behaviors but provides a flexible mechanism for components to communicate and manage shared data as they see fit.
+
+You can check the full code of the [**VM Context here**](https://github.com/p-destri/nearcon-clickdapp/blob/main/vm-context.tsx)
+
+We implemented it within the PlasmicRootProvider:
+
+```javascript
+return (
+    <PlasmicRootProvider
+    loader={PLASMIC}
+    prefetchedData={plasmicData}
+    prefetchedQueryData={queryCache}
+    pageParams={pageMeta.params}
+    pageQuery={router.query}
+    >
+    {
+        // pageMeta.displayName contains the name of the component you fetched.
+    }
+        <VMContextProvider>
+            <PlasmicComponent component={pageMeta.displayName} />
+        </VMContextProvider>
+    </PlasmicRootProvider>
+)
+```
+
+And from it, we provide the global context interaction functions: *dispatchEvent*, *registerEvent*, *dispatchState*, as well as the global state.
+
+All resources are passed via props to the BOS component:
+
+```javascript
+import React from 'react';
+import { useVMContext } from '@/vm-context';
+import { VmComponent } from '@/components/vm/VmComponent';
+
+const Example = (props) => {
+  const renderPlasmicElement = (element, values) => {
+    return React.cloneElement(props[element], values)
+  }
+
+  const context = useVMContext()
+
+  return (
+    <VmComponent
+      src="example/path/to/bos"
+	  props={{
+        ...context,
+        renderPlasmicElement,
+        plasmicRootClassName: props.className,
+      }}
+    />
+  )
+}
+```
+
+Now that you have access to the VM Context to share information between different BOS components, you can create something like this:
+
+```javascript
+const { 
+    global,
+    dispatchState,
+    registerEvent,
+    plasmicRootClassName,
+    renderPlasmicElement,
+} = props;
+
+const lusdTokenAbi = fetch(
+  "https://raw.githubusercontent.com/IDKNWHORU/liquity-sepolia/main/lusd-token-abi.json"
+);
+
+if (!lusdTokenAbi || !renderPlasmicElement) {
+  return "loading..."
+}
+
+State.init({
+  address: undefined,
+  chainId: undefined,
+  balance: undefined,
+});
+
+if (Ethers.provider()) {
+  const signer = Ethers.provider().getSigner();
+
+  signer.getAddress().then((address) => {
+    State.update({ address });
+
+    // Dispatch state to save in VM Context
+    dispatchState({ address });
+
+    if (state.chainId === 11155111) {
+      if (state.balance === undefined) {
+        Ethers.provider()
+          .getBalance(address)
+          .then((balance) => {
+            State.update({
+              balance: Big(balance).div(Big(10).pow(18)).toFixed(2),
+            });
+
+            // Dispatch state to save in VM Context
+            dispatchState({
+              balance: Big(balance).div(Big(10).pow(18)).toFixed(2),
+            });
+          });
+      }
+    }
+  });
+
+  Ethers.provider()
+    .getNetwork()
+    .then((chainIdData) => {
+      if (chainIdData?.chainId) {
+        State.update({ chainId: chainIdData.chainId });
+
+        // Dispatch state to save in VM Context
+        dispatchState({ chainId: chainIdData.chainId });
+      }
+    });
+}
+
+return (
+  <div className={plasmicRootClassName}>
+    {state.address &&
+      renderPlasmicElement("text", {
+        children: `Balance: ${state.balance} ETH`,
+      })}
+  </div>
+);
+```
 
 ## Installation
 ClickDapp is powered by [**Plasmic**](https://github.com/plasmicapp/plasmic).
@@ -106,8 +316,8 @@ If you have any problems configuring your enviroment, or hosting this app, remem
 #### Steps
 1) Clone the repository:
 ```bash
-$ gh repo clone 1Mateus/ethlisbon_poc
-$ cd ethlisbon_poc
+$ gh repo clone p-destri/nearcon-clickdapp
+$ cd nearcon-clickdapp
 ```
 
 2) Check all packages and copy the .env.example file and edit it with your environment config:
