@@ -10,6 +10,21 @@ If you have any problems configuring your enviroment, or hosting this app, remem
 ### Dependencies
 
 ### Runing Local
+
+The ClickdApp repository is based on Plasmic App Hosting ([Plasmic App Hosting Documentation](https://docs.plasmic.app/learn/app-hosting/)), which acts as the infrastructure for Plasmic Studio projects. For more information about Plasmic Studio, visit [Plasmic Studio](https://studio.plasmic.app/).
+
+Before setting up the local server, it's essential to save the keys of the Plasmic project you intend to use with clickdapp.
+
+In your Plasmic Studio, navigate to the 'Code' section.
+
+![Plsmic code section](./static/code.png)
+
+And save the keys of your project.
+
+![Plsmic projects keys](./static/keys.png)
+
+**These keys will be used in the configurations of our local server.**
+
 Open your terminal.
 
 To run clickdapp locally on your machine, first, you need to clone the repository:
@@ -17,8 +32,8 @@ To run clickdapp locally on your machine, first, you need to clone the repositor
 ```bash
 // Clone the repository
 
-$ gh repo clone p-destri/nearcon-clickdapp
-$ cd nearcon-clickdapp
+$ gh repo clone hack-a-chain-software/clickdapp
+$ cd clickdapp
 ```
 
 After that, create your .env file by filling in all the necessary values. You can make a copy of the .env.example file and add data as per your requirements:
@@ -32,8 +47,8 @@ $ cp .env.example .env
 The project currently utilizes 4 environment configurations:
 
 - `NEXT_PUBLIC_NETWORK_ID`: Corresponds to the network that clickdapp will use (either mainnet or testnet).
-- `PLASMIC_ID`: The ID of your Plasmic project.
-- `PLASMIC_TOKEN`: The token for your Plasmic project.
+- `PLASMIC_ID`: Use the ID value of the project keys saved earlier.
+- `PLASMIC_TOKEN`: Use the Token value of the project keys saved earlier.
 
 Ensure to update your `.env` file with the correct settings.
 
@@ -45,13 +60,35 @@ After correctly configuring your `.env` file, the next step is to install the pr
 $ pnpm install
 ```
 
+With all dependencies installed, you're now ready to start the local server.
+
 ```bash
 // Start App Hosting
 
 $ pnpm dev
 ```
 
+Once you have your host page set up, verify that it works by visiting it. If you followed the defaults, then it should be at something like http://localhost:3000/plasmic-host, depending on which port your app host is running.
+
+You should see something like this:
+
+![Plsmic host page](./static/plasmic-host.png)
+
+Once your host app is properly initialized, you need to ensure that your project in [Plasmic Studio](https://studio.plasmic.app/) utilizes your local server. This integration will give you access to the functionalities of ClickdApp.
+
+From your Plasmic project, click on the ellipsis menu by the name of the project on the top-left corner, and select “Configure project”:
+
+![Plsmic host page](./static/project-config.png)
+
+Enter your app host URL (taking care to specify the http/https dropdown correctly), and press Confirm.
+
+![App Host Modal](./static/app-host-modal.png)
+
+Your project should now reload with the new app host.
+
 ## Deploy
+
+TODO
 
 ## Plasmic App Host
 The Plasmic App Host is a hosting solution for applications built on the Plasmic platform, streamlining the deployment and management of web user interfaces. It acts as a container that encapsulates the application, handling the necessary infrastructure to keep the UI available online without the developer needing to manage servers and maintenance.
