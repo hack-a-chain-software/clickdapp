@@ -1,6 +1,58 @@
 # Clickdapp
 The clickdapp is a repository that implements Plasmic App Hosting and Near VM to provides powerful tools to make dapps with Plasmic Studio.
 
+## Installation
+ClickDapp is powered by [**Plasmic**](https://github.com/plasmicapp/plasmic).
+
+If you have any problems configuring your enviroment, or hosting this app, remember to read the [Plasmic App Hosting Documentation](https://docs.plasmic.app/learn/app-hosting/).
+
+-----------------
+### Dependencies
+
+### Runing Local
+Open your terminal.
+
+To run clickdapp locally on your machine, first, you need to clone the repository:
+
+```bash
+// Clone the repository
+
+$ gh repo clone p-destri/nearcon-clickdapp
+$ cd nearcon-clickdapp
+```
+
+After that, create your .env file by filling in all the necessary values. You can make a copy of the .env.example file and add data as per your requirements:
+
+```bash
+// Copy .env.example as .env
+
+$ cp .env.example .env
+```
+
+The project currently utilizes 4 environment configurations:
+
+- `NEXT_PUBLIC_NETWORK_ID`: Corresponds to the network that clickdapp will use (either mainnet or testnet).
+- `PLASMIC_ID`: The ID of your Plasmic project.
+- `PLASMIC_TOKEN`: The token for your Plasmic project.
+
+Ensure to update your `.env` file with the correct settings.
+
+After correctly configuring your `.env` file, the next step is to install the project dependencies. We use `pnpm` for this purpose.
+
+```bash
+// Install frontend dependencies via PNPM
+
+$ pnpm install
+```
+
+```bash
+// Start App Hosting
+
+$ pnpm dev
+```
+
+## Deploy
+
 ## Plasmic App Host
 The Plasmic App Host is a hosting solution for applications built on the Plasmic platform, streamlining the deployment and management of web user interfaces. It acts as a container that encapsulates the application, handling the necessary infrastructure to keep the UI available online without the developer needing to manage servers and maintenance.
 
@@ -304,33 +356,4 @@ return (
       })}
   </div>
 );
-```
-
-## Installation
-ClickDapp is powered by [**Plasmic**](https://github.com/plasmicapp/plasmic).
-
-If you have any problems configuring your enviroment, or hosting this app, remember to read the [Plasmic App Hosting Documentation](https://docs.plasmic.app/learn/app-hosting/).
-
------------------
-
-#### Steps
-1) Clone the repository:
-```bash
-$ gh repo clone p-destri/nearcon-clickdapp
-$ cd nearcon-clickdapp
-```
-
-2) Check all packages and copy the .env.example file and edit it with your environment config:
-```bash
-$ cp .env.example .env
-```
-
-3) Install frontend dependencies via PNPM
-```bash
-$ pnpm install
-```
-
-4) Start App Hosting
-```bash
-$ pnpm dev
 ```
