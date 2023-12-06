@@ -130,53 +130,51 @@ const onLogsPageChange = (page) => {
 };
 
 return (
-  <>
+  <div
+    className={plasmicRootClassName}
+  >
     {state.logs.length > 0 ? (
-      <div className={plasmicRootClassName} className="flex flex-col">
-        <div>
-          {renderPlasmicElement("table", {
-            children: (
-              <>
-                {renderPlasmicElement("thead", {
-                  children: (
-                    <tr>
-                      {renderPlasmicElement("th", {
-                        children: "Block Height",
-                      })}
-                      {renderPlasmicElement("th", {
-                        children: "Timestamp",
-                      })}
-                      {renderPlasmicElement("th", {
-                        children: "Message",
-                      })}
-                    </tr>
-                  ),
-                })}
+      <>
+        {renderPlasmicElement("table", {
+          children: (
+            <>
+              {renderPlasmicElement("thead", {
+                children: (
+                  <tr>
+                    {renderPlasmicElement("th", {
+                      children: "Block Height",
+                    })}
+                    {renderPlasmicElement("th", {
+                      children: "Timestamp",
+                    })}
+                    {renderPlasmicElement("th", {
+                      children: "Message",
+                    })}
+                  </tr>
+                ),
+              })}
 
-                {renderPlasmicElement("tbody", {
-                  children: state.logs.map((x, i) => (
-                    <tr key={x.block_height + "" + i}>
-                      {renderPlasmicElement("td", {
-                        children: x.block_height,
-                      })}
-                      {renderPlasmicElement("td", {
-                        children: x.timestamp,
-                      })}
-                      {renderPlasmicElement("td", {
-                        children: x.message,
-                      })}
-                    </tr>
-                  )),
-                })}
-              </>
-            ),
-          })}
-        </div>
-      </div>
+              {renderPlasmicElement("tbody", {
+                children: state.logs.map((x, i) => (
+                  <tr key={x.block_height + "" + i}>
+                    {renderPlasmicElement("td", {
+                      children: x.block_height,
+                    })}
+                    {renderPlasmicElement("td", {
+                      children: x.timestamp,
+                    })}
+                    {renderPlasmicElement("td", {
+                      children: x.message,
+                    })}
+                  </tr>
+                )),
+              })}
+            </>
+          ),
+        })}
+      </>
     ) : (
-      <div className={plasmicRootClassName}>
-        <span> No data to show... </span>
-      </div>
+      <span> No data to show... </span>
     )}
-  </>
+  </div>
 );

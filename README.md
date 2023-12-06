@@ -15,7 +15,7 @@ If you have any problems configuring your enviroment, or hosting this app, remem
 
 The ClickdApp repository is based on Plasmic App Hosting ([Plasmic App Hosting Documentation](https://docs.plasmic.app/learn/app-hosting/)), which acts as the infrastructure for Plasmic Studio projects. For more information about Plasmic Studio, visit [Plasmic Studio](https://studio.plasmic.app/).
 
-Before setting up the local server, it's essential to save the keys of the Plasmic project you intend to use with clickdapp.
+**Step 0.0 -** Before setting up the local server, it's essential to save the keys of the Plasmic project you intend to use with clickdapp.
 
 In your Plasmic Studio, navigate to the 'Code' section.
 
@@ -27,9 +27,9 @@ And save the keys of your project.
 
 **These keys will be used in the configurations of our local server.**
 
-Open your terminal.
+**Step 1.0 -** Open your terminal.
 
-To run clickdapp locally on your machine, first, you need to clone the repository:
+**Step 1.1 -** To run clickdapp locally on your machine, first, you need to clone the repository:
 
 ```bash
 // Clone the repository
@@ -38,7 +38,7 @@ $ gh repo clone hack-a-chain-software/clickdapp
 $ cd clickdapp
 ```
 
-After that, create your .env file by filling in all the necessary values. You can make a copy of the .env.example file and add data as per your requirements:
+**Step 1.2 -** After that, create your .env file by filling in all the necessary values. You can make a copy of the .env.example file and add data as per your requirements:
 
 ```bash
 // Copy .env.example as .env
@@ -54,7 +54,7 @@ The project currently utilizes 4 environment configurations:
 
 Ensure to update your `.env` file with the correct settings.
 
-After correctly configuring your `.env` file, the next step is to install the project dependencies. We use `pnpm` for this purpose.
+**Step 1.3 -** After correctly configuring your `.env` file, the next step is to install the project dependencies. We use `pnpm` for this purpose.
 
 ```bash
 // Install frontend dependencies via PNPM
@@ -62,7 +62,7 @@ After correctly configuring your `.env` file, the next step is to install the pr
 $ pnpm install
 ```
 
-With all dependencies installed, you're now ready to start the local server.
+**Step 1.4 -** With all dependencies installed, you're now ready to start the local server.
 
 ```bash
 // Start App Hosting
@@ -76,7 +76,7 @@ You should see something like this:
 
 ![Plsmic host page](./static/plasmic-host.png)
 
-Once your host app is properly initialized, you need to ensure that your project in [Plasmic Studio](https://studio.plasmic.app/) utilizes your local server. This integration will give you access to the functionalities of ClickdApp.
+**Step 2.0 -** Once your host app is properly initialized, you need to ensure that your project in [Plasmic Studio](https://studio.plasmic.app/) utilizes your local server. This integration will give you access to the functionalities of ClickdApp.
 
 From your Plasmic project, click on the ellipsis menu by the name of the project on the top-left corner, and select “Configure project”:
 
