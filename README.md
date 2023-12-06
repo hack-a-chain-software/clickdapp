@@ -89,8 +89,9 @@ Enter your app host URL (taking care to specify the http/https dropdown correctl
 Your project should now reload with the new app host.
 
 ## Deploy
+The simplest way to deploy Clickdapp for use in your project within Plasmic Studio is by using Vercel. Below is the link to the tutorial:
 
-TODO
+https://drive.google.com/file/d/1DyAiDI19c44fDLW46AKiHjjWZtOiiyKM/view
 
 ## Plasmic App Host
 The Plasmic App Host is a hosting solution for applications built on the Plasmic platform, streamlining the deployment and management of web user interfaces. It acts as a container that encapsulates the application, handling the necessary infrastructure to keep the UI available online without the developer needing to manage servers and maintenance.
